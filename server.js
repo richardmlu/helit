@@ -21,13 +21,12 @@ app.use(session({ secret: 'foodupzzz', cookie: { maxAge: 60000 }}));
 
 //socket.io setup
 io.on('connection', function(socket) {
-  socket.on('joined', function(data) {
+  socket.on('test', function(data) {
+	console.log(data);
   });
 
-  socket.on('remove_player', function(data) {
-  });
-
-  socket.on('answer', function(data) {
+  socket.on('start', function(data) {
+	console.log(data);
   });
 });
 

@@ -1,14 +1,23 @@
 html(lang='en')
-	head
-		title HeLit
-		link(href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css")
-		link(rel="stylesheet" href="css/normalize.css")
-		link(rel="stylesheet" href="css/skeleton.css")
-	body
-		form
-			div.six.columns
-				label(for="nameInput") Full Name
-				input.u-full-width(placeholder="Eric Song" id="nameInput")
-
-				label(for="nidInput") Patient ID
-				input.u-full-width(placeholder="12345" id="idInput")
+head
+	title HeLit
+	script(src='js/jquery.js')
+	script(src='/socket.io/socket.io.js')
+	link(href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css")
+	link(rel="stylesheet" href="css/normalize.css")
+	link(rel="stylesheet" href="css/skeleton.css")
+body
+	form#patientForm
+		div.six.columns
+			label(for="nameInput") Full Name
+			input.u-full-width(placeholder="Eric Song" id="nameInput")
+			label(for="idInput") Patient ID
+			input.u-full-width(placeholder="12345" id="idInput")
+			label(for="testTypeInput") Test Type
+			select.u-full-width(id="testTypeInput")
+				option(value="Diabetes") Diabetes
+				option(value="test2") Test 2
+				option(value="test3") Test 3
+			input.button-primary(type="submit" value="Start Test")
+footer
+	script(src='js/script.js')

@@ -6,9 +6,10 @@ var TestSchema = mongoose.Schema({
 });
 
 var QuestionSchema = mongoose.Schema({
+	number: Number,
 	body: String,
 	choices: Array,
-	correct_answer: String,
+	correct_answer: Array,
 	max_answers: Number	
 });
 
