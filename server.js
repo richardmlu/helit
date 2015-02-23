@@ -7,6 +7,11 @@ var bodyParser = require('body-parser'),
     server = http.createServer(app),
     io = require('socket.io')(server);
 
+//models
+var TestModel = require('./TestSchema').TestModel,
+    QuestionModel = require('./TestSchema').QuestionModel,
+    UserModel = require('./UserSchema').UserModel;
+
 //express middleware setup
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -30,10 +35,6 @@ io.on('connection', function(socket) {
 server.listen(8000);
 
 //express functions
-app.get('/', function(req, res) {
-  res.render('index.jade');
-});
-
-app.get('/testBroadcast', function(req, res) {
-  broadcastPlayers("test", {msg: "hello players"});
+app.get('/TestSetup', function(req, res) {
+  res.render('setup.jade');
 });

@@ -19,6 +19,7 @@
     "express": "^4.9.4",
     "express-session": "^1.8.2",
     "jade": "^1.7.0",
+    "mongoose": "^3.8.23",
     "ordrin-api": "^1.0.2",
     "request": "^2.45.0",
     "socket.io": "^1.1.0",
