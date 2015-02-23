@@ -55,7 +55,11 @@ $(document).ready(function(){
 });
 
 function loadEndPage() {
+	//hide question form
+	$('#questionForm').css('display', 'none');
 
+	//show end page	
+	$('#endPage').css('display', 'block');
 }
 
 function loadQuestion(question) {
