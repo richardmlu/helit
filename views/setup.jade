@@ -9,8 +9,10 @@ head
 body
 	form#patientForm
 		div.six.columns
-			label(for="nameInput") Full Name
-			input.u-full-width(placeholder="Eric Song" id="nameInput")
+			label(for="firstNameInput") First Name
+			input.u-full-width(placeholder="Eric" id="frstNameInput")
+			label(for="lastNameInput") Last Name
+			input.u-full-width(placeholder="Song" id="lastNameInput")
 			label(for="idInput") Patient ID
 			input.u-full-width(placeholder="12345" id="idInput")
 			label(for="testTypeInput") Test Type
@@ -19,5 +21,20 @@ body
 				option(value="test2") Test 2
 				option(value="test3") Test 3
 			input.button-primary(type="submit" value="Start Test")
+	form#questionForm(style="display: none")
+		div.six.columns
+			h4#questionBody This is a test question?
+			input.button-primary(type="submit" value="Submit")
+
+	div.choice#radioModel(style="display: none; overflow: auto")
+		input(type='radio', name='choice', value='C', style="float: left")
+		p(style="float: left") A
+
+	div.choice#checkboxModel(style="display: none; overflow: auto")
+		input(type='checkbox', name='choice', value='D', style="float: left")
+		p(style="float: left") B
+
+
+
 footer
 	script(src='js/script.js')
