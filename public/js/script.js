@@ -1,4 +1,6 @@
-var HELIT_APP = {};
+var HELIT_APP = {
+	answers: []
+};
 var socket = io();
 
 $(document).ready(function(){
@@ -14,14 +16,21 @@ $(document).ready(function(){
 
 	$('#questionForm').submit(function(e) {
 		e.preventDefault();
-	
-		//send answer to server 
-		socket.emit('answer_submit', {
-			msg: 'mock'
-		});
 
+		//get answer
+		var question_number = HELIT_APP.current_question_number;
+		var answer = $('.choice:checked').map(function() { return this.value; }).get().join(',');		
+
+		HELIT_APP.answers.push({
+			question_number: question_number,
+			answer: answer
+		});
+	
 		//load next question
 		if(HELIT_APP.current_question_number === HELIT_APP.test.questions.length) {
+			//send answers to server
+			socket.emit('test_submit', HELIT_APP.answers);
+
 			loadEndPage();			
 		} else {
 			loadQuestion(HELIT_APP.test.questions[HELIT_APP.current_question_number]);
@@ -88,7 +97,7 @@ function loadQuestion(question) {
 	$('#questionBody').text(question.body);
 
 	//remove existing choices
-	var existing_choices = $('#questionForm .choice');
+	var existing_choices = $('#questionForm .choice-container');
 	for(var i = 0; i < existing_choices.length; i++) {
 		$(existing_choices[i]).remove();
 	}	
