@@ -76,9 +76,10 @@ io.on('connection', function(socket) {
   });
 
   socket.on('test_submit', function(data) {
+	console.log("Saving user test submission...");
 	for(var i = 0; i < sessions.length; i++) {
-		if(sessions[i].socket === this) {
-			console.log("Saving user test submission...");
+		if(sessions[i].id === data.id) {
+			console.log("correct session found");
 
 			(function(testname) {
 				UserModel.findOne({id: sessions[i].id}, function(err, user) {
@@ -86,7 +87,7 @@ io.on('connection', function(socket) {
 
 					user.tests.push({
 						name: testname,
-						answers: data
+						answers: data.answers
 					});
 
 					user.save(function(err) {

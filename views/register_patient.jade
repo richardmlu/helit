@@ -6,16 +6,16 @@ head
 	link(href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css")
 	link(rel="stylesheet" href="css/normalize.css")
 	link(rel="stylesheet" href="css/skeleton.css")
+	link(rel="stylesheet" href="css/setup.css")
 body
 	form#patientForm
-		div.six.columns
-			label(for="firstNameInput") First Name
-			input.u-full-width(placeholder="Eric" id="firstNameInput")
-			label(for="lastNameInput") Last Name
-			input.u-full-width(placeholder="Song" id="lastNameInput")
-			label(for="idInput") Patient ID
-			input.u-full-width(placeholder="12345" id="idInput")
-			input#submit-button.button-primary(type="submit" value="Register")
+		label(for="firstNameInput") First Name
+		input.u-full-width(placeholder="Eric" id="firstNameInput")
+		label(for="lastNameInput") Last Name
+		input.u-full-width(placeholder="Song" id="lastNameInput")
+		label(for="idInput") Patient ID
+		input.u-full-width(placeholder="12345" id="idInput")
+		input#submit-button.button-primary(type="submit" value="Register")
 
 footer
 	script(src='js/register_patient.js')

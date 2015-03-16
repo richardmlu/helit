@@ -6,6 +6,7 @@ var socket = io();
 $(document).ready(function(){
 	$('#patientForm').submit(function(e) {
 		e.preventDefault();
+		HELIT_APP.user_id = $('#idInput').val();
 		socket.emit('start', {
 			first_name: $('#firstNameInput').val(),
 			last_name: $('#lastNameInput').val(),
@@ -21,6 +22,10 @@ $(document).ready(function(){
 		var question_number = HELIT_APP.current_question_number;
 		var answer = $('.choice:checked').map(function() { return this.value; }).get().join(',');		
 
+		if(answer === "") {
+			return;
+		}
+
 		HELIT_APP.answers.push({
 			question_number: question_number,
 			answer: answer
@@ -29,7 +34,11 @@ $(document).ready(function(){
 		//load next question
 		if(HELIT_APP.current_question_number === HELIT_APP.test.questions.length) {
 			//send answers to server
-			socket.emit('test_submit', HELIT_APP.answers);
+			socket.emit('test_submit', {
+				id: HELIT_APP.user_id,
+				answers: HELIT_APP.answers
+			});
+			console.log('sending test');
 
 			loadEndPage();			
 		} else {

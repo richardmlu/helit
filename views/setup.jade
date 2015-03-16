@@ -6,25 +6,20 @@ head
 	link(href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css")
 	link(rel="stylesheet" href="css/normalize.css")
 	link(rel="stylesheet" href="css/skeleton.css")
+	link(rel="stylesheet" href="css/setup.css")
 body
 	form#patientForm
-		div.six.columns
-			label(for="firstNameInput") First Name
-			input.u-full-width(placeholder="Eric" id="frstNameInput")
-			label(for="lastNameInput") Last Name
-			input.u-full-width(placeholder="Song" id="lastNameInput")
-			label(for="idInput") Patient ID
-			input.u-full-width(placeholder="12345" id="idInput")
-			label(for="testTypeInput") Test Type
-			select.u-full-width(id="testTypeInput")
-				option(value="Diabetes") Diabetes
-				option(value="test2") Test 2
-				option(value="test3") Test 3
-			input.button-primary(type="submit" value="Start Test")
+		label(for="idInput") Patient ID
+		input.u-full-width(placeholder="12345" id="idInput")
+		label(for="testTypeInput") Test Type
+		select.u-full-width(id="testTypeInput")
+			option(value="Diabetes") Diabetes
+			option(value="test2") Test 2
+			option(value="test3") Test 3
+		input.button-primary(type="submit" value="Start Test")
 	form#questionForm(style="display: none")
-		div.six.columns
-			h4#questionBody This is a test question?
-			input.button-primary(type="submit" value="Submit")
+		h4#questionBody This is a test question?
+		input.button-primary(type="submit" value="Submit")
 	div#endPage(style="display: none")
 		h2 Test is complete.
 		h2 Please return iPad to clinic.
