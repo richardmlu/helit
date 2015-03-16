@@ -116,6 +116,10 @@ app.get('/RegisterPatient', function(req, res) {
 	res.render('register_patient.jade');
 });
 
+app.get('/reporting', function(req, res) {
+	res.render('reporting.jade');
+});
+
 app.post('/RegisterPatient', function(req, res) {
 	var newUser = new UserModel({
 		first_name: req.body.first_name,
@@ -134,6 +138,37 @@ app.post('/RegisterPatient', function(req, res) {
 
 		res.json({
 			msg: msg	
+		});
+	});
+});
+
+app.post('/PatientSearch', function(req, res) {
+	console.log(req.body);
+
+	UserModel.findOne({id: req.body.id}, function(err, user){
+		if(err) {
+			console.log("ERROR: patient search failed");
+			res.json({
+				status: 'failure',
+				msg: err
+			});
+
+			return;
+		}
+
+		if(!user) {
+			console.log("ERROR: patient search failed");
+			res.json({
+				status: 'failure',
+				msg: 'Patient not found'
+			});
+
+			return;
+		}
+
+		res.json({
+			status: 'success',
+			results: user.tests
 		});
 	});
 });

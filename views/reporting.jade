@@ -1,0 +1,19 @@
+html(lang='en')
+head
+	title HeLit Patient Reporting Page
+	script(src='js/jquery.js')
+	script(src='/socket.io/socket.io.js')
+	link(href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css")
+	link(rel="stylesheet" href="css/normalize.css")
+	link(rel="stylesheet" href="css/skeleton.css")
+	link(rel="stylesheet" href="css/reporting.css")
+body
+	form#patientForm
+		label(for="idInput") Patient ID
+		input.u-full-width(placeholder="12345" id="idInput")
+		br
+		input#submit-button.button-primary(type="submit" value="Search")
+	p#results-container
+
+footer
+	script(src='js/reporting.js')
