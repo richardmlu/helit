@@ -38,7 +38,12 @@ $(document).ready(function(){
 		}
 	});
 
-	socket.on('testData', function(data) {
+	socket.on('test_start', function(data) {
+		if(data.status === 'error') {
+			console.log("ERROR: " + data.msg);
+			return;
+		}
+
 		HELIT_APP.test = data.test;
 		//hide test form
 		$('#patientForm').css('display', 'none');

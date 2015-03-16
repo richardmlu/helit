@@ -35,25 +35,72 @@ io.on('connection', function(socket) {
   });
 
   socket.on('start', function(data) {
+	console.log("Test start request received:");
 	console.log(data);
-	sessions.push({
-		socket: this,
-		id: data.id
+
+	//check if patient exists
+	UserModel.findOne({id: data.id}, function(err, user) {
+		if(err) {
+			console.log("ERROR: patient lookup failed");
+			socket.emit('test_start', {
+				status: 'error',
+				msg: 'patient lookup failed'
+			});
+
+			return;
+		}
+
+		if(!user) {
+			console.log("ERROR: patient not found");
+			socket.emit('test_start', {
+				'status': 'error',
+				msg: 'patient not found'
+			});
+			return;
+		}
+
+		sessions.push({
+			socket: this,
+			id: data.id,
+			test_name: data.test_type
+		});
+
+		TestModel.findOne({'name': data.test_type}, function(err, docs) {
+			socket.emit('test_start', {
+				status: 'success',
+				test: docs
+			});
+		});
 	});
 
-	TestModel.findOne({'name': data.test_type}, function(err, docs) {
-		socket.emit('testData', {test: docs});
-	});
   });
 
   socket.on('test_submit', function(data) {
 	for(var i = 0; i < sessions.length; i++) {
 		if(sessions[i].socket === this) {
 			console.log("Saving user test submission...");
+
+			(function(testname) {
+				UserModel.findOne({id: sessions[i].id}, function(err, user) {
+					if(err) { console.log(err); return; }
+
+					user.tests.push({
+						name: testname,
+						answers: data
+					});
+
+					user.save(function(err) {
+						if(err) {
+							console.log("Test submission failed...");
+							return err;
+						}
+
+						console.log("test saved");
+					});
+				});		
+			}(sessions[i].test_name));	
 		}
 	}
-
-	console.log(data);
   });
 });
 
@@ -73,7 +120,8 @@ app.post('/RegisterPatient', function(req, res) {
 	var newUser = new UserModel({
 		first_name: req.body.first_name,
 		last_name: req.body.last_name,
-		id: parseInt(req.body.id)
+		id: parseInt(req.body.id),
+		tests: []
 	});	
 
 	newUser.save(function(err) {
