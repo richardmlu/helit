@@ -6,12 +6,11 @@ $(document).ready(function(){
 			id: $('#idInput').val()
 		}, function(data){
 			if(data.status === "success") {
-				var printstring = "";
 				for(var i = 0; i < data.results[0].answers.length; i++) {
-					printstring += data.results[0].answers[i].question_number + ": " + data.results[0].answers[i].answer + "";
+					var printstring = data.results[0].answers[i].question_number + ": " + data.results[0].answers[i].answer;
+					$('#results-container').append($("<p>" + printstring + "</p>"));
+					$('#results-container').append($('<br>'));
 				}
-
-				$('#results-container').text(printstring);
 			} else {
 				$('#results-container').text("Patient search failed.");
 			}
