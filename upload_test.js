@@ -18,16 +18,46 @@ db.once('open', function() {
 temp_question = new QuestionModel;
 temp_question.number = 1;
 temp_question.body = "Do you have diabetes?";
-temp_question.choices = ["No", "Yes; I have Type 1 Diabetes", "Yes; I have Type 2 Diabetes", "I'm not sure"];
-temp_question.correct_answer = [];
+temp_question.choices = [
+  { 
+    text: "No",
+    correct: false,
+    value: 0 
+  }, 
+  {
+    text: "Yes; I have Type 1 Diabetes", 
+    correct: false,
+    value: 0
+  },
+  {
+    text: "Yes; I have Type 2 Diabetes",
+    correct: false,
+    value: 0
+  }
+];
 temp_question.max_answers = 1;
 questions.push(temp_question);
 
 temp_question = new QuestionModel;
 temp_question.number = 2;
-temp_question.body = "What is diabetes?";
-temp_question.choices = ["s", "sadas", "asdioasd", "correct"];
-temp_question.correct_answer = ["correct"];
+temp_question.body = "What does it mean to have diabetes?";
+temp_question.choices = [
+  { 
+    text: "I can't digest sugar",
+    correct: false,
+    value: 0 
+  }, 
+  {
+    text: "I have a lot of sugar in my blood", 
+    correct: true,
+    value: 3
+  },
+  {
+    text: "I am allergic to sugar",
+    correct: false,
+    value: 0
+  }
+];
 temp_question.max_answers = 1;
 questions.push(temp_question);
 
