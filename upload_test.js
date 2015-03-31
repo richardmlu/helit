@@ -17,6 +17,8 @@ db.once('open', function() {
 
 temp_question = new QuestionModel;
 temp_question.number = 1;
+temp_question.category = "Personal";
+temp_question.priority = 5;
 temp_question.body = "Do you have diabetes?";
 temp_question.choices = [
   { 
