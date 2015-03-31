@@ -144,32 +144,88 @@ app.post('/RegisterPatient', function(req, res) {
 });
 
 app.post('/PatientSearch', function(req, res) {
-	console.log(req.body);
+  //make it work with all tests later
+  //also async it
+  TestSchema.findOne({name: "Diabetes"}, function(err, test) {
+    UserModel.findOne({id: req.body.id}, function(err, user){
+      //patient search failed
+      if(err) {
+        console.log("ERROR: patient search failed");
+        return res.json({
+          status: 'failure',
+          msg: err
+        });
+      }
 
-	UserModel.findOne({id: req.body.id}, function(err, user){
-		if(err) {
-			console.log("ERROR: patient search failed");
-			res.json({
-				status: 'failure',
-				msg: err
-			});
+      //patient not found 
+      if(!user) {
+        console.log("ERROR: patient not found");
+        return res.json({
+          status: 'failure',
+          msg: 'Patient not found'
+        });
+      }
 
-			return;
-		}
+      /**  calculate reporting values  **/
+      var lastVisitPercentChange,
+          firstVisitPercentChange,
+          priorityConcerns,
+          scorePlots;
 
-		if(!user) {
-			console.log("ERROR: patient search failed");
-			res.json({
-				status: 'failure',
-				msg: 'Patient not found'
-			});
+      ////  % diff from last visit
+      //sort by date
+      user.tests.sort(function(a, b) {
+        if(a.date < b.date)
+          return -1;
+        else if(a.date > b.date)
+          return 1;
+        else
+          return 0;
+      });  
 
-			return;
-		}
+      //get most recent 2 tests and calculate % difference
+      lastVisitPercentChange = (user.tests[0].score - user.tests[1].score) / user.tests[0].score * 100;
 
-		res.json({
-			status: 'success',
-			results: user.tests
-		});
-	});
+      //% diff from first visit
+      lastVisitPercentChange = (user.tests[0].score - user.tests[user.tests.length-1].score) / user.tests[0].score * 100;
+
+      //// Priority concerns  
+      // Sort by priority index
+      var lastTest = user.tests[0];
+      lastTest.answers.sort(function(a, b){ 
+        if(a.priorityScore < b.priorityScore)
+          return -1;
+        else if(a.priorityScore > b.priorityScore) 
+          return 1;
+        else
+          return 0;
+      });
+
+      // Combine user answers with test questions
+      var priorityConcerns = lastTest.answers.slice();
+      for(var i = 0; i < priorityConcerns.length; i++) {
+        //find corresponding test question
+        var qi;
+        for(qi = 0; qi < test.questions.length; qi++) {
+          if(test.questions[qi].number === priorityConcerns[i].id) {
+            break; 
+          }
+        }
+
+        priorityConcerns[i] = {
+          question: test.questions[qi],
+          answer: priorityConcerns[i]
+        };
+      }
+
+      //// Graph - plot points for 'score'
+
+      
+      res.json({
+        status: 'success',
+        results: user.tests
+      });
+    });
+
+  });
 });
