@@ -1,13 +1,57 @@
 #patientForm {
 	width: 700px;
 	margin: 10px auto;
+  text-align: center;
+  font-size: 20px;
+}
+
+#patientForm label {
+  font-size: 30px;
 }
 
 #patientForm input {
 	width: 40%;
-	margin: 10px auto;
+  height: 40px;
+  padding: 0 0;
 }
 
-#results-container {
-	margin: 10px auto;
+#idInput {
+	margin: 10px 10px;
+  margin-left: 60px;
+  margin-bottom: 0px;
+  float: left;
+}
+
+#submit-button {
+	margin: 10px 10px;
+  margin-bottom: 0px;
+  float: left;
+}
+
+#graphContainer {
+  width: 433px;
+  height: 543px;
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-right: 25px;
+  float: left;
+  border: 2px black solid;
+  border-radius: 8px;
+  border-color: gray;
+}
+
+#infoContainer {
+  width: 433px;
+  height: 543px;
+  margin-top: 50px;
+  margin-left: 25px;
+  margin-right: 50px;
+  float: left;
+  border: 2px black solid;
+  border-radius: 8px;
+  border-color: gray;
+}
+
+#resultsContainer {
+  margin: 10px auto;
 }

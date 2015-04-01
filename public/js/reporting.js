@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	$('#patientForm').submit(function(e) {
 		e.preventDefault();
-
+      
 		$.post('/PatientSearch', {
 			id: $('#idInput').val()
     }, function(data){
@@ -26,7 +26,10 @@ $(document).ready(function(){
       }
       var ctx = document.getElementById("scoreGraph").getContext("2d");
       var myNewChart = new Chart(ctx).Line(graphData);
-
+      myNewChart.canvas.width = 433;
+      myNewChart.canvas.height = 543;
+      ctx.canvas.width = 433;
+      ctx.canvas.height = 543;
 		});
 	});
 });

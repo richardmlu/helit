@@ -11,12 +11,13 @@ head
   link(rel="stylesheet" href="css/reporting.css")
 body
   form#patientForm
-    label(for="idInput") Patient ID
+    label(for="idInput") HeLit Patient Report
     input.u-full-width(placeholder="12345" id="idInput")
-    br
     input#submit-button.button-primary(type="submit" value="Search")
-  div#results-container
-    canvas#scoreGraph(width=400, height=400)
-
+  div#resultsContainer
+    div#graphContainer
+      canvas#scoreGraph(width=433, height=543)
+    div#infoContainer hello
+    
 footer
   script(src='js/reporting.js')
