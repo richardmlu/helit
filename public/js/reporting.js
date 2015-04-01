@@ -5,7 +5,7 @@ $(document).ready(function(){
 		$.post('/PatientSearch', {
 			id: $('#idInput').val()
     }, function(data){
-
+      console.log(data);
       var graphData = {
         labels: [],
         datasets: [{
@@ -24,12 +24,38 @@ $(document).ready(function(){
       for(var i = 0; i < data.graph.labels.length; i++) {
         graphData.labels.push((new Date(data.graph.labels[i])).format('m/d/yy'));
       }
+      
+      //draw graph
       var ctx = document.getElementById("scoreGraph").getContext("2d");
       var myNewChart = new Chart(ctx).Line(graphData);
-      myNewChart.canvas.width = 433;
-      myNewChart.canvas.height = 543;
-      ctx.canvas.width = 433;
-      ctx.canvas.height = 543;
+
+      //create concern items
+      for(var i = 0; i < data.priorityConcerns.length; i++) {
+        $('#infoContainer').append(createConcernItem(data.priorityConcerns[i]));
+      }
 		});
 	});
 });
+
+function createConcernItem(concern) {
+  //clone model
+  var newConcern = $('#concern-item-model').clone();
+
+  //remove id
+  newConcern.removeAttr('id');
+
+  //make displayable
+  newConcern.css('display', 'block');
+
+  //attach question
+  $($(newConcern).find('.question-text')[0]).text(concern.question.body);
+
+  //create answer string
+
+  var answerString = "Answer given: ";
+
+  answerString += concern.answer.answer.join(", ");
+  $($(newConcern).find('.answer-text')[0]).text(answerString);
+
+  return newConcern;
+}

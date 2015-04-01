@@ -50,19 +50,34 @@
   border: 2px black solid;
   border-radius: 8px;
   border-color: gray;
+  overflow: hidden;
 }
 
 .concern-item {
   width: 90%;
-  height: 150px;
   margin: auto auto;
+  margin-bottom: 20px;
   border: 1px solid black;
   border-radius: 5px;
   border-color: gray;
+  overflow: auto;
 }
 
 .concern-item h6{
-  margin: 5px 5px;
+  margin: 10px 10px;
+}
+
+.concern-item button {
+  margin-left: 53px;
+  float: left;
+}
+
+.address-button {
+  background-color: #91EB79;
+}
+
+.ignore-button {
+  background-color: #ED7478;
 }
 
 #resultsContainer {
