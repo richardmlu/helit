@@ -22,6 +22,8 @@ $(document).ready(function(){
 		var question_number = HELIT_APP.current_question_number;
 		var answer = [];
     var temp = $('.choice:checked');
+    var priorityScore = 0;
+    var choices = HELIT_APP.test.questions[HELIT_APP.current_question_number].choices;
 
     for(var i = 0; i < temp.length; i++) {
       answer.push(temp[i].value);
@@ -33,8 +35,18 @@ $(document).ready(function(){
 
     console.log(answer);
 
+    for(var i = 0; i < choices.length; i++) {
+      if(choices[i].correct) {
+        //check if user answerd this correctly
+        if(!answer.indexOf(choices[i].text)) {
+          priorityScore += choices[i].value;
+        }
+      }
+    }
+
 		HELIT_APP.answers.push({
 			question_number: question_number,
+      priorityScore: priorityScore,
 			answer: answer
 		});
 	
