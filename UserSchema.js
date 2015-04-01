@@ -9,12 +9,13 @@ var mongoose = require('mongoose');
  * {
  *  date: Number, //unix timestamp
  *  score: Number //calculated overall score
+ *  name: testname,
  *  answers: [answer, answer, answer]
  * }
  * answer: {
- *   id: question id,
+ *   question_number: question id,
  *   priorityScore: Number, //priority score for doctors to bring up with patients
- *   answers: []
+ *   answer: []
  * }
  *
  */

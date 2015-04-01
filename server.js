@@ -86,6 +86,8 @@ io.on('connection', function(socket) {
             if(err) { console.log(err); return; }
 
             user.tests.push({
+              date: Date.now(),
+              score: data.score,
               name: testname,
               answers: data.answers
             });

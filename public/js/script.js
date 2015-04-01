@@ -19,11 +19,11 @@ $(document).ready(function(){
 		e.preventDefault();
 
 		//get answer
-		var question_number = HELIT_APP.current_question_number;
-		var answer = [];
-    var temp = $('.choice:checked');
-    var priorityScore = 0;
-    var choices = HELIT_APP.test.questions[HELIT_APP.current_question_number].choices;
+		var question_number = HELIT_APP.current_question_number,
+		    answer = [],
+        temp = $('.choice:checked'),
+        priorityScore = 0,
+        choices = HELIT_APP.test.questions[HELIT_APP.current_question_number-1].choices;
 
     for(var i = 0; i < temp.length; i++) {
       answer.push(temp[i].value);
@@ -33,37 +33,39 @@ $(document).ready(function(){
 			return;
 		}
 
-    console.log(answer);
-
     for(var i = 0; i < choices.length; i++) {
       if(choices[i].correct) {
         //check if user answerd this correctly
-        if(!answer.indexOf(choices[i].text)) {
+        if(answer.indexOf(choices[i].text) === -1) {
           priorityScore += choices[i].value;
         }
       }
     }
+
+    console.log('score: ' + priorityScore);
 
 		HELIT_APP.answers.push({
 			question_number: question_number,
       priorityScore: priorityScore,
 			answer: answer
 		});
-	
-		//load next question
+
+
 		if(HELIT_APP.current_question_number === HELIT_APP.test.questions.length) {
-			//send answers to server
 			console.log('sending test');
+
 			socket.emit('test_submit', {
 				id: HELIT_APP.user_id,
+        score: calculateScore(HELIT_APP.test, HELIT_APP.answers);
 				answers: HELIT_APP.answers
 			});
 
 			loadEndPage();			
 		} else {
-			loadQuestion(HELIT_APP.test.questions[HELIT_APP.current_question_number]);
-			HELIT_APP.current_question_number++;
-		}
+      //load next question
+      loadQuestion(HELIT_APP.test.questions[HELIT_APP.current_question_number]);
+      HELIT_APP.current_question_number++;
+    }
 	});
 
 	socket.on('test_start', function(data) {
@@ -139,4 +141,32 @@ function loadQuestion(question) {
 	for(var i = choices.length-1; i >= 0; i--) {
 		$('#questionBody').after($(choices[i]));
 	}
+}
+
+function calculateScore(test, answers) {
+  var score = 0;
+  console.log(test);
+  console.log(answers);
+  for(var i = 0; i < test.questions.length; i++) {
+    var question_number = test.questions[i].number;
+
+    //find corresponding answer object
+    var qi;
+    for(qi = 0; qi < answers.length; qi++) {
+      if(answers[qi].question_number === question_number) {
+        break;
+      }
+    }
+
+    //iterate over choices, looking for correct choice(s)
+    for(var j = 0; j < test.questions[i].choices.length; j++) {
+      if(test.questions[i].choices[j].correct) {
+        if(answers[qi].answer.indexOf(test.questions[i].choices[j].text) !== -1) {
+          score += test.questions[i].choices[j].value;
+        }
+      }
+    }
+  }
+
+  return score;
 }
