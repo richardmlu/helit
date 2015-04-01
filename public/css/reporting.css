@@ -52,6 +52,19 @@
   border-color: gray;
 }
 
+.concern-item {
+  width: 90%;
+  height: 150px;
+  margin: auto auto;
+  border: 1px solid black;
+  border-radius: 5px;
+  border-color: gray;
+}
+
+.concern-item h6{
+  margin: 5px 5px;
+}
+
 #resultsContainer {
   margin: 10px auto;
 }
