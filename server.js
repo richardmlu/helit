@@ -172,7 +172,10 @@ app.post('/PatientSearch', function(req, res) {
       var lastVisitPercentChange,
           firstVisitPercentChange,
           priorityConcerns,
-          scorePlots;
+          graph = {
+            labels: [],
+            data: []
+          };
 
       ////  % diff from last visit
       //sort by date
@@ -185,14 +188,17 @@ app.post('/PatientSearch', function(req, res) {
           return 0;
       });  
 
-      console.log(user.tests[0].score);
-      console.log(user.tests[1].score);
-
       //get most recent 2 tests and calculate % difference
       lastVisitPercentChange = (user.tests[0].score - user.tests[1].score) / user.tests[0].score * 100;
 
       //% diff from first visit
       firstVisitPercentChange = (user.tests[0].score - user.tests[user.tests.length-1].score) / user.tests[0].score * 100;
+
+      //// Graph - plot points for 'score'
+      for(var i = 0; i < user.tests.length; i++) {
+        graph.labels.unshift(user.tests[i].date);
+        graph.data.unshift(user.tests[i].score);
+      }
 
       //// Priority concerns  
       // Sort by priority index
@@ -207,12 +213,12 @@ app.post('/PatientSearch', function(req, res) {
       });
 
       // Combine user answers with test questions
-      var priorityConcerns = lastTest.answers.slice();
+      var priorityConcerns = lastTest.answers.slice(0);
       for(var i = 0; i < priorityConcerns.length; i++) {
         //find corresponding test question
         var qi;
         for(qi = 0; qi < test.questions.length; qi++) {
-          if(test.questions[qi].number === priorityConcerns[i].id) {
+          if(test.questions[qi].number === priorityConcerns[i].question_number) {
             break; 
           }
         }
@@ -221,16 +227,15 @@ app.post('/PatientSearch', function(req, res) {
           question: test.questions[qi],
           answer: priorityConcerns[i]
         };
+
       }
-
-      //// Graph - plot points for 'score'
-
       
       res.json({
         status: 'success',
         lastVisitPercentChange: lastVisitPercentChange,
         firstVisitPercentChange: firstVisitPercentChange,
-        priorityConcerns: priorityConcerns
+        priorityConcerns: priorityConcerns,
+        graph: graph
       });
     });
 
