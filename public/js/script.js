@@ -20,11 +20,18 @@ $(document).ready(function(){
 
 		//get answer
 		var question_number = HELIT_APP.current_question_number;
-		var answer = $('.choice:checked').map(function() { return this.value; }).get().join(',');		
+		var answer = [];
+    var temp = $('.choice:checked');
 
-		if(answer === "") {
+    for(var i = 0; i < temp.length; i++) {
+      answer.push(temp[i].value);
+    }
+
+		if(answer.length === 0) {
 			return;
 		}
+
+    console.log(answer);
 
 		HELIT_APP.answers.push({
 			question_number: question_number,
@@ -34,11 +41,11 @@ $(document).ready(function(){
 		//load next question
 		if(HELIT_APP.current_question_number === HELIT_APP.test.questions.length) {
 			//send answers to server
+			console.log('sending test');
 			socket.emit('test_submit', {
 				id: HELIT_APP.user_id,
 				answers: HELIT_APP.answers
 			});
-			console.log('sending test');
 
 			loadEndPage();			
 		} else {
@@ -102,8 +109,8 @@ function loadQuestion(question) {
 		$(newchoice).css('display', 'block');
 
 		//change data
-		$($(newchoice).find('input')[0]).attr('value', question.choices[i]);
-		$($(newchoice).find('p')).text(question.choices[i]);
+		$($(newchoice).find('input')[0]).attr('value', question.choices[i].text);
+		$($(newchoice).find('p')).text(question.choices[i].text);
 
 		choices.push(newchoice);
 	}

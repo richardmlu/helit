@@ -76,32 +76,32 @@ io.on('connection', function(socket) {
   });
 
   socket.on('test_submit', function(data) {
-	console.log("Saving user test submission...");
-	for(var i = 0; i < sessions.length; i++) {
-		if(sessions[i].id === data.id) {
-			console.log("correct session found");
+    console.log("Saving user test submission...");
+    for(var i = 0; i < sessions.length; i++) {
+      if(sessions[i].id === data.id) {
+        console.log("correct session found");
 
-			(function(testname) {
-				UserModel.findOne({id: sessions[i].id}, function(err, user) {
-					if(err) { console.log(err); return; }
+        (function(testname) {
+          UserModel.findOne({id: sessions[i].id}, function(err, user) {
+            if(err) { console.log(err); return; }
 
-					user.tests.push({
-						name: testname,
-						answers: data.answers
-					});
+            user.tests.push({
+              name: testname,
+              answers: data.answers
+            });
 
-					user.save(function(err) {
-						if(err) {
-							console.log("Test submission failed...");
-							return err;
-						}
+            user.save(function(err) {
+              if(err) {
+                console.log("Test submission failed...");
+                return err;
+              }
 
-						console.log("test saved");
-					});
-				});		
-			}(sessions[i].test_name));	
-		}
-	}
+              console.log("test saved");
+            });
+          });		
+        }(sessions[i].test_name));	
+      }
+    }
   });
 });
 
