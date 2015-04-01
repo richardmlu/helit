@@ -56,7 +56,7 @@ $(document).ready(function(){
 
 			socket.emit('test_submit', {
 				id: HELIT_APP.user_id,
-        score: calculateScore(HELIT_APP.test, HELIT_APP.answers);
+        score: calculateScore(HELIT_APP.test, HELIT_APP.answers),
 				answers: HELIT_APP.answers
 			});
 

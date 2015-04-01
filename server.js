@@ -148,7 +148,7 @@ app.post('/RegisterPatient', function(req, res) {
 app.post('/PatientSearch', function(req, res) {
   //make it work with all tests later
   //also async it
-  TestSchema.findOne({name: "Diabetes"}, function(err, test) {
+  TestModel.findOne({name: "Diabetes"}, function(err, test) {
     UserModel.findOne({id: req.body.id}, function(err, user){
       //patient search failed
       if(err) {
@@ -178,27 +178,30 @@ app.post('/PatientSearch', function(req, res) {
       //sort by date
       user.tests.sort(function(a, b) {
         if(a.date < b.date)
-          return -1;
-        else if(a.date > b.date)
           return 1;
+        else if(a.date > b.date)
+          return -1;
         else
           return 0;
       });  
+
+      console.log(user.tests[0].score);
+      console.log(user.tests[1].score);
 
       //get most recent 2 tests and calculate % difference
       lastVisitPercentChange = (user.tests[0].score - user.tests[1].score) / user.tests[0].score * 100;
 
       //% diff from first visit
-      lastVisitPercentChange = (user.tests[0].score - user.tests[user.tests.length-1].score) / user.tests[0].score * 100;
+      firstVisitPercentChange = (user.tests[0].score - user.tests[user.tests.length-1].score) / user.tests[0].score * 100;
 
       //// Priority concerns  
       // Sort by priority index
       var lastTest = user.tests[0];
       lastTest.answers.sort(function(a, b){ 
         if(a.priorityScore < b.priorityScore)
-          return -1;
-        else if(a.priorityScore > b.priorityScore) 
           return 1;
+        else if(a.priorityScore > b.priorityScore) 
+          return -1;
         else
           return 0;
       });
@@ -225,7 +228,9 @@ app.post('/PatientSearch', function(req, res) {
       
       res.json({
         status: 'success',
-        results: user.tests
+        lastVisitPercentChange: lastVisitPercentChange,
+        firstVisitPercentChange: firstVisitPercentChange,
+        priorityConcerns: priorityConcerns
       });
     });
 
