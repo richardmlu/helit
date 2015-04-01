@@ -17,7 +17,11 @@ body
   div#resultsContainer
     div#graphContainer
       canvas#scoreGraph(width=433, height=543)
-    div#infoContainer hello
+    div#infoContainer
+      select.u-full-width
+        option(value="Summary") Summary
+        option(value="Priority Concerns") Priority Concerns
+        option(value="Previous Concerns") Previous Concerns
     
 footer
   script(src='js/reporting.js')
