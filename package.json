@@ -1,6 +1,6 @@
 {
-  "name": "foodup",
-  "description": "heads up using ordrin food items",
+  "name": "HeaLit",
+  "description": "Health Literacy Test",
   "version": "0.0.1",
   "author": "Eric Song",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/ericsong/foodup"
+    "url": "git://github.com/ericsong/HeaLit"
   },
   "engines": {
     "node": "0.8.x",
@@ -20,10 +20,7 @@
     "express-session": "^1.8.2",
     "jade": "^1.7.0",
     "mongoose": "^3.8.23",
-    "ordrin-api": "^1.0.2",
     "request": "^2.45.0",
     "socket.io": "^1.1.0",
-    "superagent": "^0.20.0",
-    "traverson": "^0.10.0"
   }
 }
