@@ -4,11 +4,40 @@
 }
 
 #questionForm {
+  position: relative;
 	width: 600px;
-	margin: 100px auto;
+  height: 400px;
+	margin: 150px auto;
+}
+
+#questionForm .button-primary {
+  margin-top: 20px;
+  display: block;
 }
 
 #endPage {
 	width: 600px;
 	margin: 100px auto;
+}
+
+.choice-container {
+  border: 2px solid grey;
+  border-radius: 5px;
+  padding: 5px 5px;
+  margin: 10px 10px;
+  margin-left: 0px;
+  margin-right: 20px;
+}
+
+.choice-container input {
+  display: none;
+}
+
+.choice-container:has(input:checked) {
+  background-color: #CCC3C2;
+}
+
+.choice-container p {
+  margin-top: 3px;
+  margin-bottom: 0px;
 }

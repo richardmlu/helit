@@ -120,11 +120,14 @@ function loadQuestion(question) {
 		$(newchoice).removeAttr('id');
 
 		//change display
-		$(newchoice).css('display', 'block');
+		$(newchoice).css('display', 'inline-block');
 
 		//change data
 		$($(newchoice).find('input')[0]).attr('value', question.choices[i].text);
 		$($(newchoice).find('p')).text(question.choices[i].text);
+
+    //attach listener
+    $(newchoice).click(selectChoice);
 
 		choices.push(newchoice);
 	}
@@ -169,4 +172,28 @@ function calculateScore(test, answers) {
   }
 
   return score;
+}
+
+function selectChoice() {
+  var choiceBox = $(this).find('input');
+
+  if(!$(choiceBox).is(':checked')) {
+    $($(this).find('input')).prop('checked', true);
+    console.log('selecting choice');
+  } else {
+    $($(this).find('input')).prop('checked', false);
+    console.log('unselecting choice');
+  }
+
+  //recolor choices
+  var checked = $('.choice-container input:checked');
+  for(var i = 0; i < checked.length; i++) {
+    $($(checked[i]).parent()).css('background-color', '#CCC3C2');
+  }
+
+  var unchecked = $('.choice-container input:not(:checked)');
+  for(var i = 0; i < unchecked.length; i++) {
+    $($(unchecked[i]).parent()).css('background-color', 'white');
+  }
+
 }
