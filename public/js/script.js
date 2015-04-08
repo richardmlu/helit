@@ -1,4 +1,4 @@
-var HELIT_APP = {
+var HEALIT_APP = {
 	answers: []
 };
 var socket = io();
@@ -6,7 +6,7 @@ var socket = io();
 $(document).ready(function(){
 	$('#patientForm').submit(function(e) {
 		e.preventDefault();
-		HELIT_APP.user_id = $('#idInput').val();
+		HEALIT_APP.user_id = $('#idInput').val();
 		socket.emit('start', {
 			first_name: $('#firstNameInput').val(),
 			last_name: $('#lastNameInput').val(),
@@ -19,11 +19,11 @@ $(document).ready(function(){
 		e.preventDefault();
 
 		//get answer
-		var question_number = HELIT_APP.current_question_number,
+		var question_number = HEALIT_APP.current_question_number,
 		    answer = [],
         temp = $('.choice:checked'),
         priorityScore = 0,
-        choices = HELIT_APP.test.questions[HELIT_APP.current_question_number-1].choices;
+        choices = HEALIT_APP.test.questions[HEALIT_APP.current_question_number-1].choices;
 
     for(var i = 0; i < temp.length; i++) {
       answer.push(temp[i].value);
@@ -44,27 +44,27 @@ $(document).ready(function(){
 
     console.log('score: ' + priorityScore);
 
-		HELIT_APP.answers.push({
+		HEALIT_APP.answers.push({
 			question_number: question_number,
       priorityScore: priorityScore,
 			answer: answer
 		});
 
 
-		if(HELIT_APP.current_question_number === HELIT_APP.test.questions.length) {
+		if(HEALIT_APP.current_question_number === HEALIT_APP.test.questions.length) {
 			console.log('sending test');
 
 			socket.emit('test_submit', {
-				id: HELIT_APP.user_id,
-        score: calculateScore(HELIT_APP.test, HELIT_APP.answers),
-				answers: HELIT_APP.answers
+				id: HEALIT_APP.user_id,
+        score: calculateScore(HEALIT_APP.test, HEALIT_APP.answers),
+				answers: HEALIT_APP.answers
 			});
 
 			loadEndPage();			
 		} else {
       //load next question
-      loadQuestion(HELIT_APP.test.questions[HELIT_APP.current_question_number]);
-      HELIT_APP.current_question_number++;
+      loadQuestion(HEALIT_APP.test.questions[HEALIT_APP.current_question_number]);
+      HEALIT_APP.current_question_number++;
     }
 	});
 
@@ -74,12 +74,12 @@ $(document).ready(function(){
 			return;
 		}
 
-		HELIT_APP.test = data.test;
+		HEALIT_APP.test = data.test;
 		//hide test form
 		$('#patientForm').css('display', 'none');
 
 		//sort questions
-		HELIT_APP.test.questions.sort(function(a,b) {
+		HEALIT_APP.test.questions.sort(function(a,b) {
 			if(a.number < b.number)
 				return -1;
 			else if(a.number > b.number)
@@ -89,8 +89,8 @@ $(document).ready(function(){
 		});
 
 		//load question 1
-		loadQuestion(HELIT_APP.test.questions[0]);
-		HELIT_APP.current_question_number = 1;
+		loadQuestion(HEALIT_APP.test.questions[0]);
+		HEALIT_APP.current_question_number = 1;
 
 		//show question form
 		$('#questionForm').css('display', 'block');

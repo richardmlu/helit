@@ -3,7 +3,7 @@ var TestModel = require('./TestSchema').TestModel,
     mongoose = require('mongoose');
 
 
-mongoose.connect('mongodb://localhost/helit');
+mongoose.connect('mongodb://localhost/healit');
 
 var db = mongoose.connection, 
     questions = [],

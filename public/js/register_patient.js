@@ -10,14 +10,10 @@ $(document).ready(function(){
 			if(data.msg === "success") {
 				$('#submit-button').attr('value', 'Success');
 				$('#submit-button').css('background-color', '#00e800');
-			console.log('hi1');
 			} else {
 				$('#submit-button').attr('value', 'Failed');
 				$('#submit-button').css('background-color', '#f90022');
-			console.log('hi2');
 			}
-
-			console.log('hi');
 		});
 	});
 });

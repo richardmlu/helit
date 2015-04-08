@@ -14,7 +14,7 @@ var TestModel = require('./TestSchema').TestModel,
     QuestionModel = require('./TestSchema').QuestionModel,
     UserModel = require('./UserSchema').UserModel;
 
-mongoose.connect('mongodb://localhost/helit');
+mongoose.connect('mongodb://localhost/healit');
 db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() { console.log('connected'); });
