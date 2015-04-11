@@ -11,8 +11,10 @@
 }
 
 #questionForm .button-primary {
-  margin-top: 20px;
   display: block;
+  width: 200px;
+  height: 50px;
+  margin-top: 20px;
 }
 
 #endPage {
