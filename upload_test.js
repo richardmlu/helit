@@ -2,6 +2,7 @@ var TestModel = require('./TestSchema').TestModel,
     QuestionModel = require('./TestSchema').QuestionModel,
     mongoose = require('mongoose');
 
+//test for richard
 
 mongoose.connect('mongodb://localhost/healit');
 
