@@ -134,6 +134,10 @@ function loadQuestion(question) {
 
 	$('#questionBody').text(question.body);
 
+  //grey out submit button
+  $($('#questionForm .button-primary')[0]).css('background-color', '#c2c2c2');
+  $($('#questionForm .button-primary')[0]).css('border-color', '#c2c2c2');
+
 	//remove existing choices
 	var existing_choices = $('#questionForm .choice-container');
 	for(var i = 0; i < existing_choices.length; i++) {
@@ -189,6 +193,15 @@ function selectChoice() {
   var checked = $('.choice-container input:checked');
   for(var i = 0; i < checked.length; i++) {
     $($(checked[i]).parent()).css('background-color', '#CCC3C2');
+  }
+
+  //grey out submit button if no choices are selected
+  if(checked.length === 0) {
+    $($('#questionForm .button-primary')[0]).css('background-color', '#c2c2c2');
+    $($('#questionForm .button-primary')[0]).css('border-color', '#c2c2c2');
+  } else {
+    $($('#questionForm .button-primary')[0]).css('background-color', '#33C3F0');
+    $($('#questionForm .button-primary')[0]).css('border-color', '#33C3F0');
   }
 
   var unchecked = $('.choice-container input:not(:checked)');
