@@ -119,28 +119,13 @@ function saveAnswer(e) {
 
       //attach new submit listener
       $('#questionForm').unbind('submit');
-      $('#questionForm').submit(loadNextPage);
+      $('#questionForm').submit(loadNextListener);
     } else {
-      if(HEALIT_APP.current_question_number === HEALIT_APP.test.questions.length) {
-        //end of test
-        console.log('sending test');
-
-        socket.emit('test_submit', {
-          id: HEALIT_APP.user_id,
-          score: calculateScore(HEALIT_APP.test, HEALIT_APP.answers),
-          answers: HEALIT_APP.answers
-        });
-
-        loadEndPage();			
-      } else {
-        //load next question
-        loadQuestion(HEALIT_APP.test.questions[HEALIT_APP.current_question_number]);
-        HEALIT_APP.current_question_number++;
-      }   
+      loadNext();   
     }
 }
 
-function loadNextPage(e) {
+function loadNextListener(e) {
     console.log("load next page function");
 		e.preventDefault();
     
@@ -148,6 +133,10 @@ function loadNextPage(e) {
     $('#questionForm').submit(saveAnswer);
     $($("#questionForm .button-primary")[0]).val("Submit");
 
+    loadNext();   
+}
+
+function loadNext() {
     if(HEALIT_APP.current_question_number === HEALIT_APP.test.questions.length) {
       //end of test
 			console.log('sending test');
@@ -163,7 +152,7 @@ function loadNextPage(e) {
       //load next question
       loadQuestion(HEALIT_APP.test.questions[HEALIT_APP.current_question_number]);
       HEALIT_APP.current_question_number++;
-    }   
+    }
 }
 
 function loadEndPage() {
