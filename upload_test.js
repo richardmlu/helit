@@ -586,12 +586,12 @@ temp_question.body = "Which symptoms of hypoglycemia have you felt?";
 temp_question.choices = [ 
   {
     text: "Low energy", 
-    correct: true,
+    correct: false,
     value: 0.5
   },
   {
     text: "Hunger",
-    correct: true,
+    correct: false,
     value: 0.25
   },
   {
@@ -601,77 +601,77 @@ temp_question.choices = [
   },
   { 
     text: "Fatigue",
-    correct: true,
+    correct: false,
     value: 0.5
   }, 
   { 
     text: "Headache",
-    correct: true,
+    correct: false,
     value: 0.5
   }, 
   { 
     text: "Racing heart",
-    correct: true,
+    correct: false,
     value: 0.5
   }, 
   { 
     text: "Blurred-vision",
-    correct: true,
+    correct: false,
     value: 0.25
   }, 
   { 
     text: "Pale skin",
-    correct: true,
+    correct: false,
     value: 0.5
   }, 
   { 
     text: "Shaking",
-    correct: true,
+    correct: false,
     value: 0.5
   }, 
   { 
     text: "Sweating",
-    correct: true,
+    correct: false,
     value: 0.5
   }, 
   { 
     text: "Sudden mood changes",
-    correct: true,
+    correct: false,
     value: 0.5 
   }, 
   { 
     text: "Sudden nervousness",
-    correct: true,
+    correct: false,
     value: 0.5
   }, 
   { 
     text: "Nausea",
-    correct: true,
+    correct: false,
     value: 0.25 
   }, 
   { 
     text: "Numbness",
-    correct: true,
+    correct: false,
     value: 0.5
   }, 
   { 
     text: "Weakness",
-    correct: true,
+    correct: false,
     value: 0.5
   }, 
   { 
     text: "Confusion",
-    correct: true,
+    correct: false,
     value: 0.25
   }, 
   { 
     text: "Loss of consciousness",
-    correct: true,
+    correct: false,
     value: 0.5
   }, 
   { 
     text: "Coma",
-    correct: true,
+    correct: false,
     value: 0.5 
   }, 
 ];
