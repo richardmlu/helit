@@ -4,7 +4,44 @@ var HEALIT_APP = {
 var socket = io();
 
 $(document).ready(function(){
-	$('#patientForm').submit(function(e) {
+  //attach submit listeners
+	$('#patientForm').submit(sendStartTestRequest);
+	$('#questionForm').submit(saveAnswer);
+
+  //start listening for response to startTest request
+	socket.on('test_start', startTest);
+});
+
+function startTest(data) {
+		if(data.status === 'error') {
+			console.log("ERROR: " + data.msg);
+			return;
+		}
+
+		HEALIT_APP.test = data.test;
+		//hide test form
+		$('#patientForm').css('display', 'none');
+
+		//sort questions
+		HEALIT_APP.test.questions.sort(function(a,b) {
+			if(a.number < b.number)
+				return -1;
+			else if(a.number > b.number)
+				return 1;
+			else
+				return 0;
+		});
+
+		//load question 1
+		loadQuestion(HEALIT_APP.test.questions[0]);
+		HEALIT_APP.current_question_number = 1;
+
+		//show question form
+		$('#questionForm').css('display', 'block');
+		console.log(data);
+}
+
+function sendStartTestRequest(e) {
 		e.preventDefault();
 		HEALIT_APP.user_id = $('#idInput').val();
 		socket.emit('start', {
@@ -13,9 +50,9 @@ $(document).ready(function(){
 			id: $('#idInput').val(),
 			test_type: $('#testTypeInput').val()
 		});
-	});
+}
 
-	$('#questionForm').submit(function(e) {
+function saveAnswer(e) {
 		e.preventDefault();
 
 		//get answer
@@ -66,37 +103,8 @@ $(document).ready(function(){
       loadQuestion(HEALIT_APP.test.questions[HEALIT_APP.current_question_number]);
       HEALIT_APP.current_question_number++;
     }
-	});
+}
 
-	socket.on('test_start', function(data) {
-		if(data.status === 'error') {
-			console.log("ERROR: " + data.msg);
-			return;
-		}
-
-		HEALIT_APP.test = data.test;
-		//hide test form
-		$('#patientForm').css('display', 'none');
-
-		//sort questions
-		HEALIT_APP.test.questions.sort(function(a,b) {
-			if(a.number < b.number)
-				return -1;
-			else if(a.number > b.number)
-				return 1;
-			else
-				return 0;
-		});
-
-		//load question 1
-		loadQuestion(HEALIT_APP.test.questions[0]);
-		HEALIT_APP.current_question_number = 1;
-
-		//show question form
-		$('#questionForm').css('display', 'block');
-		console.log(data);
-	});
-});
 
 function loadEndPage() {
 	//hide question form

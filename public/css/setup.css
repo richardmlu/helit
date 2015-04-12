@@ -17,8 +17,8 @@
   margin-top: 20px;
   border-color: #808080;
   background-color: #c2c2c2;
-  transition: background-color 0.5s ease,
-              border-color 0.5s ease;
+  transition: background-color 0.4s ease,
+              border-color 0.4s ease;
 }
 
 #endPage {
