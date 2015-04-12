@@ -53,19 +53,23 @@ function sendStartTestRequest(e) {
 }
 
 function saveAnswer(e) {
+    console.log("save answer");
 		e.preventDefault();
 
-		//get answer
 		var question_number = HEALIT_APP.current_question_number,
 		    answer = [],
         temp = $('.choice:checked'),
         priorityScore = 0,
-        choices = HEALIT_APP.test.questions[HEALIT_APP.current_question_number-1].choices;
+        choices = HEALIT_APP.test.questions[HEALIT_APP.current_question_number-1].choices,
+        DOM_choices = $('#questionForm input'),
+        correctAnswersNum = 0;
 
+    //get answers
     for(var i = 0; i < temp.length; i++) {
       answer.push(temp[i].value);
     }
 
+    //just return if no answer selected
 		if(answer.length === 0) {
 			return;
 		}
@@ -76,19 +80,76 @@ function saveAnswer(e) {
         if(answer.indexOf(choices[i].text) === -1) {
           priorityScore += choices[i].value;
         }
+
+        correctAnswersNum++;
       }
     }
 
-    console.log('score: ' + priorityScore);
-
+    //save answer
 		HEALIT_APP.answers.push({
 			question_number: question_number,
       priorityScore: priorityScore,
 			answer: answer
 		});
+  
+    if(correctAnswersNum > 0) {
+      //mark correct/incorrect answers
+      for(var i = 0; i < choices.length; i++) {
+        if(choices[i].correct) {
+          //make correct answers green
+          for(var j = 0; j < DOM_choices.length; j++) {
+            if($(DOM_choices[j]).val() === choices[i].text) {
+              $($(DOM_choices[j]).parent()).css('background-color', '#85ff85');
+            }
+          }
+        } else {
+          if(answer.indexOf(choices[i].text) !== -1 ) {
+            //make incorrest answers red
+            for(var j = 0; j < DOM_choices.length; j++) {
+              if($(DOM_choices[j]).val() === choices[i].text) {
+                $($(DOM_choices[j]).parent()).css('background-color', '#ff8585');
+              }
+            }         
+          }
+        }
+      }    
 
+      //Change submit button to "next"
+      $($("#questionForm .button-primary")[0]).val("Next");
 
-		if(HEALIT_APP.current_question_number === HEALIT_APP.test.questions.length) {
+      //attach new submit listener
+      $('#questionForm').unbind('submit');
+      $('#questionForm').submit(loadNextPage);
+    } else {
+      if(HEALIT_APP.current_question_number === HEALIT_APP.test.questions.length) {
+        //end of test
+        console.log('sending test');
+
+        socket.emit('test_submit', {
+          id: HEALIT_APP.user_id,
+          score: calculateScore(HEALIT_APP.test, HEALIT_APP.answers),
+          answers: HEALIT_APP.answers
+        });
+
+        loadEndPage();			
+      } else {
+        //load next question
+        loadQuestion(HEALIT_APP.test.questions[HEALIT_APP.current_question_number]);
+        HEALIT_APP.current_question_number++;
+      }   
+    }
+}
+
+function loadNextPage(e) {
+    console.log("load next page function");
+		e.preventDefault();
+    
+    $('#questionForm').unbind('submit');
+    $('#questionForm').submit(saveAnswer);
+    $($("#questionForm .button-primary")[0]).val("Submit");
+
+    if(HEALIT_APP.current_question_number === HEALIT_APP.test.questions.length) {
+      //end of test
 			console.log('sending test');
 
 			socket.emit('test_submit', {
@@ -102,9 +163,8 @@ function saveAnswer(e) {
       //load next question
       loadQuestion(HEALIT_APP.test.questions[HEALIT_APP.current_question_number]);
       HEALIT_APP.current_question_number++;
-    }
+    }   
 }
-
 
 function loadEndPage() {
 	//hide question form
