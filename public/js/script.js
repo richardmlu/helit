@@ -1,5 +1,6 @@
 var HEALIT_APP = {
-	answers: []
+	answers: [],
+  disable_select: false
 };
 var socket = io();
 
@@ -53,7 +54,6 @@ function sendStartTestRequest(e) {
 }
 
 function saveAnswer(e) {
-    console.log("save answer");
 		e.preventDefault();
 
 		var question_number = HEALIT_APP.current_question_number,
@@ -117,6 +117,9 @@ function saveAnswer(e) {
       //Change submit button to "next"
       $($("#questionForm .button-primary")[0]).val("Next");
 
+      //disable selection
+      HEALIT_APP.disable_select = true;
+
       //attach new submit listener
       $('#questionForm').unbind('submit');
       $('#questionForm').submit(loadNextListener);
@@ -126,9 +129,11 @@ function saveAnswer(e) {
 }
 
 function loadNextListener(e) {
-    console.log("load next page function");
 		e.preventDefault();
-    
+
+    //disable selection
+    HEALIT_APP.disable_select = false;
+
     $('#questionForm').unbind('submit');
     $('#questionForm').submit(saveAnswer);
     $($("#questionForm .button-primary")[0]).val("Submit");
@@ -236,6 +241,10 @@ function calculateScore(test, answers) {
 }
 
 function selectChoice() {
+  if(HEALIT_APP.disable_select) {
+    return;
+  }
+
   var choiceBox = $(this).find('input');
 
   if(!$(choiceBox).is(':checked')) {
