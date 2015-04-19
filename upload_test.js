@@ -61,6 +61,11 @@ temp_question.choices = [
     text: "I am allergic to sugar",
     correct: false,
     value: 0
+  },
+  {
+    text: "I don't know",
+    correct: false,
+    value: 0
   }
 ];
 temp_question.max_answers = 1;
@@ -96,8 +101,17 @@ temp_question.choices = [
     text: "There is no cure",
     correct: true,
     value: 5
+  },
+  {
+    text: "I am allergic to sugar",
+    correct: false,
+    value: 0
+  },
+  {
+    text: "I don't know",
+    correct: false,
+    value: 0
   }
-
 ];
 temp_question.max_answers = -1;
 questions.push(temp_question);
@@ -130,6 +144,16 @@ temp_question.choices = [
   },
   {
     text: "There are no treatments",
+    correct: false,
+    value: 0
+  },
+  {
+    text: "I am allergic to sugar",
+    correct: false,
+    value: 0
+  },
+  {
+    text: "I don't know",
     correct: false,
     value: 0
   }
@@ -189,6 +213,11 @@ temp_question.choices = [
     correct: false,
     value: 0
   },
+  {
+    text: "I don't know",
+    correct: false,
+    value: 0
+  }
 ];
 temp_question.max_answers = 1;
 questions.push(temp_question);
@@ -328,7 +357,12 @@ temp_question.choices = [
     text: "Coma",
     correct: true,
     value: 0.5 
-  }, 
+  },
+  {
+    text: "I don't know",
+    correct: false,
+    value: 0
+  }
 ];
 temp_question.max_answers = -1;
 questions.push(temp_question);
@@ -434,6 +468,11 @@ temp_question.choices = [
     correct: false,
     value: 0
   },
+  {
+    text: "I don't know",
+    correct: false,
+    value: 0
+  }
 ];
 temp_question.max_answers = 1;
 questions.push(temp_question);
@@ -573,7 +612,12 @@ temp_question.choices = [
     text: "Coma",
     correct: true,
     value: 0.5 
-  }, 
+  },
+  {
+    text: "I don't know",
+    correct: false,
+    value: 0
+  }
 ];
 temp_question.max_answers = -1;
 questions.push(temp_question);
